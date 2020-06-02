@@ -13,7 +13,7 @@ module.exports = new facebookStrategy(
   async function (accessToken, refreshToken, profile, cb) {
     const name = profile._json.first_name + " " + profile._json.last_name;
     const { email } = profile._json;
-    const user = await User.findOneOrCreate({ name, email });
+    const user = await User.findOneOrCreate(name, email);
     cb(null, user);
   }
 );

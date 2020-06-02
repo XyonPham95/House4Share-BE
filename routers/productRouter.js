@@ -11,7 +11,10 @@ const { auth } = require("../controllers/authControllers");
 
 const { checkProduct, checkCategory } = require("../middleware/test");
 
-router.route("/").get(getProducts).post(auth, createProduct);
+router.route("/")
+.get(getProducts)
+.post(auth, createProduct);
+
 router
   .route("/:pId")
   .put(auth, checkProduct, updateProduct)

@@ -43,9 +43,9 @@ const productSchema = mongoose.Schema(
       required: [true, "product must have price"],
       min: [0, "price must have atleast 0 dollar"],
     },
-    picture: {
+    image: {
       type: String,
-      required: [true, "product must have picture"],
+      required: [true, "product must have image"],
     },
   },
   {

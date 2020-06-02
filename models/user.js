@@ -28,18 +28,15 @@ const schema = mongoose.Schema(
     },
 
     dob: {
-      type: Date,
+      type: String,
       required: false,
-      default: new Date(),
       trim: true,
     },
     gender: {
       type: String,
-      enum: ["male", "female"],
       trim: true,
       lowercase: true,
-      default: "male",
-      required: [true, "Gender must be provided"],
+      default: "unknown",
     },
 
     roles: {
@@ -82,8 +79,7 @@ schema.virtual("userTours", {
 });
 
 schema.statics.loginWithCredentials = async function (email, password) {
-  const user = await User.findOne({ email: email.toLowerCase() });
-  console.log("object", user);
+  const user = await this.findOne({ email: email.toLowerCase() });
   if (!user) throw new AppError("Email not correct", 401);
   if (!user.password)
     throw new AppError(
@@ -105,11 +101,10 @@ schema.methods.generateToken = async function () {
   return token;
 };
 
-schema.statics.findOneOrCreate = async (name, email) => {
-  let user = await User.findOne({ email });
-  console.log(user);
+schema.statics.findOneOrCreate = async function (name, email) {
+  let user = await this.findOne({ email: email });
   if (!user) {
-    user = new User(name, email);
+    user = new User({ name, email });
     user.token.push(await user.generateToken(user));
     await user.save({ validateBeforeSave: false });
   } else {
@@ -152,7 +147,6 @@ schema.methods.toJSON = function () {
   delete userObj.token;
   delete userObj.password;
   delete userObj.__v;
-  delete userObj.dob;
   return userObj;
 };
 
