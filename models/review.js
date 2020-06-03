@@ -17,12 +17,6 @@ const reviewSchema = mongoose.Schema(
       ref: "Product",
       required: [true, "review must have product"],
     },
-    rating: {
-      type: Number,
-      required: [true, "Review needs a rating"],
-      min: 1,
-      max: 5,
-    },
   },
   {
     timestamps: true,

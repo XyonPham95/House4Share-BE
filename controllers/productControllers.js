@@ -24,14 +24,16 @@ exports.getProducts = catchAsync(async function (req, res, next) {
   const page = req.query.page * 1;
   const limit = req.query.limit * 1;
   const skip = (page - 1) * limit;
-  const products = await Product.find({}).skip(skip).limit(limit)
+  const products = await Product.find({}).skip(skip).limit(limit);
   const countProducts = await Product.find({}).countDocuments();
-  return res.status(200).json({ status: "success", data: products, total: countProducts});
+  return res
+    .status(200)
+    .json({ status: "success", data: products, total: countProducts });
 });
 
 exports.getSingleProduct = catchAsync(async function (req, res) {
   const id = req.params.pId;
-  const product = await Product.findById(id);
+  const product = await Product.findById(id).populate("comments.user");
   if (!product) throw new Error("product not found");
   return res.status(200).json({ status: "success", data: product });
 });

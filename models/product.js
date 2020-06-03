@@ -22,22 +22,19 @@ const productSchema = mongoose.Schema(
       ref: "User",
       required: [true, "product must have owner"],
     },
-    ratingAverage: {
-      type: Number,
-      default: 0,
-      min: [0, "Rating must be above 0"],
-      max: [5, "Rating must be below 5.0"],
-      set: (value) => Math.round(value * 10) / 10,
-    },
-
-    ratingQuantity: {
-      type: Number,
-      default: 0,
-    },
-    availability: {
-      type: Number,
-      min: [0, "availability must be equal or than 0"],
-    },
+    comments: [{
+      review: {
+        type: String,
+      },
+      user: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User"
+      },
+      date: {
+        type: Date,
+        default: new Date()
+      }
+    }],
     price: {
       type: Number,
       required: [true, "product must have price"],

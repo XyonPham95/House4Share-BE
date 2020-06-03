@@ -1,15 +1,16 @@
 const Review = require("../models/review");
+const Product = require("../models/product");
 const { updateOne, deleteOne } = require("../controllers/factories");
 const catchAsync = require("../utils/catchAsync");
 
 exports.createReview = catchAsync(async function (req, res) {
-  console.log(req.user.name);
-  const review = await Review.create({
-    ...req.body,
-    product: req.params.pId,
-    user: req.user._id,
-  });
-  return res.status(201).json({ status: "success", data: review });
+  const product = await Product.findById(req.params.pId).populate(
+    "comments.user"
+  );
+  console.log(product);
+  product.comments.push({ review: req.body.review, user: req.user._id });
+  await product.save({ validateBeforeSave: false });
+  return res.status(201).json({ status: "success", data: product });
 });
 
 exports.getReviews = catchAsync(async function (req, res) {

@@ -38,7 +38,6 @@ const schema = mongoose.Schema(
       lowercase: true,
       default: "unknown",
     },
-
     roles: {
       type: String,
       enum: ["user", "admin", "editor"],

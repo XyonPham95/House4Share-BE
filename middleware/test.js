@@ -11,7 +11,7 @@ exports.checkCategory = async function (req, res, next) {
 };
 
 exports.checkProduct = async function (req, res, next) {
-  if (!req.params.pId || !(await Product.exists({ _id: req.params.pId })))
+    if (!req.params.pId || !(await Product.exists({ _id: req.params.pId })))
     return res
       .status(400)
       .json({ status: "fail", message: "Product not found" });
