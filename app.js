@@ -14,7 +14,7 @@ const categoryRouter = require("./routers/categoryRouter");
 const passport = require("./auth/passport");
 
 mongoose
-  .connect(process.env.DB_LOCAL, {
+  .connect(process.env.MONGODB_URI, {
     useCreateIndex: true,
     useNewUrlParser: true,
     useFindAndModify: false,

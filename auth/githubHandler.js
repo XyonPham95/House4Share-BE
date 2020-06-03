@@ -6,10 +6,10 @@ exports.loginGithub = passport.authenticate("github", {
 
 exports.githubAuth = function (req, res, next) {
   passport.authenticate("github", function (err, user, info) {
-    if (err) return res.redirect(`https://localhost:3000/login`);
+    if (err) return res.redirect(`https://house4share.netlify.app/login`);
 
     return res.redirect(
-      `https://localhost:3000/?token=${user.token[user.token.length - 1]}`
+      `https://house4share.netlify.app/?token=${user.token[user.token.length - 1]}`
     );
   })(req, res, next);
 };
