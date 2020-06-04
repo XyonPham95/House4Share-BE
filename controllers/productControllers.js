@@ -15,7 +15,7 @@ exports.updateProduct = updateOne(Product);
 exports.deleteProduct = deleteOne(Product);
 
 exports.getProducts = catchAsync(async function (req, res, next) {
-  const filters = { ...req.body };
+  const filters = { ...req.query };
   const paginationKeys = ["limit", "page", "sort"];
   paginationKeys.map((el) => delete filters[el]);
 
@@ -24,8 +24,8 @@ exports.getProducts = catchAsync(async function (req, res, next) {
   const page = req.query.page * 1;
   const limit = req.query.limit * 1;
   const skip = (page - 1) * limit;
-  const products = await Product.find({}).skip(skip).limit(limit).sort(req.query.sort);
-  const countProducts = await Product.find({}).countDocuments();
+  const products = await Product.find(filters).skip(skip).limit(limit).sort(req.query.sort);
+  const countProducts = await Product.find(filters).countDocuments();
   return res
     .status(200)
     .json({ status: "success", data: products, total: countProducts });
@@ -42,6 +42,7 @@ exports.getByCategory = catchAsync(async function (req, res, next) {
   const filters = { ...req.body };
   const paginationKeys = ["limit", "page", "sort"];
   paginationKeys.map((el) => delete filters[el]);
+
 
   const sortBy = req.query.sort;
 
