@@ -24,7 +24,7 @@ exports.getProducts = catchAsync(async function (req, res, next) {
   const page = req.query.page * 1;
   const limit = req.query.limit * 1;
   const skip = (page - 1) * limit;
-  const products = await Product.find({}).skip(skip).limit(limit);
+  const products = await Product.find({}).skip(skip).limit(limit).sort(req.query.sort);
   const countProducts = await Product.find({}).countDocuments();
   return res
     .status(200)

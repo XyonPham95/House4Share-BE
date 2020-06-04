@@ -22,19 +22,22 @@ const productSchema = mongoose.Schema(
       ref: "User",
       required: [true, "product must have owner"],
     },
-    comments: [{
-      review: {
-        type: String,
+    comments: [
+      {
+        review: {
+          type: String,
+        },
+        user: {
+          type: mongoose.Schema.ObjectId,
+          ref: "User",
+        },
+        date: {
+          type: Date,
+          default: new Date(),
+        },
       },
-      user: {
-        type: mongoose.Schema.ObjectId,
-        ref: "User"
-      },
-      date: {
-        type: Date,
-        default: new Date()
-      }
-    }],
+    ],
+    room: { type: Number },
     price: {
       type: Number,
       required: [true, "product must have price"],
