@@ -4,12 +4,11 @@ const { updateOne, deleteOne } = require("../controllers/factories");
 const catchAsync = require("../utils/catchAsync");
 
 exports.createReview = catchAsync(async function (req, res) {
-  const product = await Product.findById(req.params.pId).populate(
-    "comments.user"
-  );
-  console.log(product);
-  product.comments.push({ review: req.body.review, user: req.user._id });
-  await product.save({ validateBeforeSave: false });
+  const product = await Product.findOneAndUpdate(
+    { _id: req.params.pId },
+    { $push: { comments: { review: req.body.review, user: req.user._id } } },
+    { new: true }
+  ).populate("comments.user");
   return res.status(201).json({ status: "success", data: product });
 });
 
