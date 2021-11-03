@@ -27,6 +27,6 @@
     "passport-twitter": "^1.0.4",
     "request": "^2.88.2",
     "stripe": "^8.53.0",
-    "validator": "^13.0.0"
+    "validator": "^13.7.0"
   }
 }
